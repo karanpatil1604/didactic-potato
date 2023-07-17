@@ -24,7 +24,8 @@ class RegisterController extends Controller
                 'max:255'
             ],
         ]);
-        User::create($attributes);
-        return redirect('/');
+        $user = User::create($attributes);
+        auth()->login($user);
+        return redirect('/')->with('success', "Your account has been created");
     }
 }
