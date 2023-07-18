@@ -13,6 +13,9 @@
                 <p class="text-xs">Posted <time>{{ $comment->created_at->format('F j, Y, g:i a') }}</time> </p>
             </header>
             <p> {{ $comment->body }}
+                @error('body')
+                    <span class="text-red-500 text-xs mt-1">{{ $message }} </span>
+                @enderror
             </p>
         </div>
     </article>
