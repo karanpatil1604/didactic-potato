@@ -52,7 +52,7 @@
             <div class="mt-10">
                 <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
 
-                    <form method="GET" action="/newsletter" class="lg:flex text-sm">
+                    <form method="POST" action="/newsletter" class="lg:flex text-sm">
                         @csrf
                         @if (request('category'))
                             <input type="hidden" name="category" value="{{ request('category') }}">
