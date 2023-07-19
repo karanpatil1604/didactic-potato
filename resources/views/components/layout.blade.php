@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Laravel From Scratch Blog</title>
+<title>{{ env('APP_NAME', 'NONE') }} From Scratch Blog</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,14 +23,25 @@
             <div class="mt-8 md:mt-0 flex align-middle items-center">
 
                 @auth
-                    <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
-                    <form action="/logout" method="post" class="text-xs font-bold text-blue-500 ml-6 ">
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</button>
+                        </x-slot>
+                        <x-dropdown-item href="/admin/dashboard">Dashboard</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        <x-dropdown-item x-data="{}"
+                            @click.prevent="document.querySelector('#logout-form').submit()" href="#">Log Out
+                        </x-dropdown-item>
+                    </x-dropdown>
+                    <form id='logout-form' action="/logout" method="post" class="hidden">
                         @csrf
                         <button type="submit" class="hover:scale-125">Log Out</button>
                     </form>
                 @else
-                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
-                    <a href="/login" class="ml-3 text-xs font-bold uppercase">Login</a>
+                    <a href="/register"
+                        class="text-xs font-bold uppercase  {{ request()->is('register') ? 'text-blue-500' : '' }}">Register</a>
+                    <a href="/login"
+                        class="ml-3 text-xs font-bold uppercase  {{ request()->is('login') ? 'text-blue-500' : '' }}">Login</a>
 
                 @endauth
                 <a href="#newsletter"
