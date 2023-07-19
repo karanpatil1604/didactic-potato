@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminPostController;
 
 
 /*
@@ -36,4 +37,24 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 
 Route::get('admin/posts/create', [PostController::class, 'create'])->name('create_post')->middleware('admin');
 
-Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');
+
+
+// Admin
+// Automatically make routes for 
+// 7 generic operations use except to exclude some
+
+// Route::middleware('can:admin')->group(function () {
+//     Route::resource('admin/posts', AdminPostController::class)->except('show');
+// });
+
+// ============================= initial explicit method ===============================//
+Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('can:admin');
+
+Route::get('admin/posts/create', [AdminPostController::class, 'create'])->middleware('can:admin');
+Route::post('admin/posts', [AdminPostController::class, 'store'])->middleware('can:admin');
+
+Route::get('admin/posts/{post}/edit}', [AdminPostController::class, 'edit'])->middleware('can:admin');
+Route::patch('admin/posts/{post}}', [AdminPostController::class, 'update'])->middleware('can:admin');
+
+Route::delete('admin/posts/{post}}', [AdminPostController::class, 'destroy'])->middleware('can:admin');
+// ============================= end initial explicit method ================================//

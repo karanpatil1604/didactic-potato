@@ -27,10 +27,12 @@
                         <x-slot name="trigger">
                             <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</button>
                         </x-slot>
-                        <x-dropdown-item href="/admin/dashboard">Dashboard</x-dropdown-item>
-                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        @admin
+                            <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
+                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        @endadmin
                         <x-dropdown-item x-data="{}"
-                            @click.prevent="document.querySelector('#logout-form').submit()" href="#">Log Out
+                            @click.prevent="document.querySelector('#logout-form').submit()" href="/logout">Log Out
                         </x-dropdown-item>
                     </x-dropdown>
                     <form id='logout-form' action="/logout" method="post" class="hidden">

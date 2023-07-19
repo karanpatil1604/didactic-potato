@@ -5,8 +5,8 @@
                 <h1 class="text-center font-bold text-xl">Log In</h1>
                 <form action="/login" method="post" class="mt-10">
                     @csrf
-                    <x-form.input name="email" type="email" />
-                    <x-form.input name="password" type="password" />
+                    <x-form.input name="email" type="email" required />
+                    <x-form.input name="password" type="password" required />
                     <x-form.button>Log In</x-form.button>
                 </form>
             </x-panel>
